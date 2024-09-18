@@ -3,8 +3,16 @@ import axios from 'axios';
 import Loader from '../Loader/Loader';
 import { useParams } from 'react-router-dom'
 import { GrLanguage } from "react-icons/gr";
+import { FaHeart } from "react-icons/fa";
+import { IoIosCart } from "react-icons/io";
+import { useSelector } from 'react-redux';
+import { FaUserEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 const ViewBookDetails = () => {
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const role = useSelector((state) => state.auth.role);
+    
     const {id} = useParams();
     const [Data, setData] = useState();
     useEffect(() => {
@@ -17,9 +25,23 @@ const ViewBookDetails = () => {
   return (
     <>
       {Data && (
-          <div className='px-4 md:px-12 py-8 bg-zinc-900 flex flex-col md:flex-row'>
-            <div className='bg-zinc-800 rounded p-4 h-[60vh] lg:h-[88vh] w-full lg:w-3/6 flex items-center justify-center'> 
-              <img src={Data.url} className='h-[50vh] lg:h-[70vh] rounded'/>
+          <div className='px-4 md:px-12 py-8 bg-zinc-900 flex flex-col md:flex-row lg:flex-row gap-8'>
+            <div className='w-full lg:w-3/6'> 
+              <div className='flex flex-col lg:flex-row justify-around bg-zinc-800 p-12 rounded'>
+                <img src={Data.url} alt='/' className='h-[50vh] md:h-[60vh] lg:h-[70vh] rounded'/>
+                {isLoggedIn === true && role === "user" && (
+                  <div className='flex flex-row lg:flex-col mt-4 lg:mt-0 items-center justify-between lg:justify-start'>
+                    <button className='text-red-600 hover:bg-red-100 transition-all duration-[0.75s] rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8'><FaHeart /></button>
+                    <button className='text-blue-600 hover:bg-blue-100 transition-all duration-[0.75s] rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8'><IoIosCart /></button>
+                  </div>
+                )}
+                {isLoggedIn === true && role === "admin" && (
+                  <div className='flex flex-row lg:flex-col mt-4 lg:mt-0 items-center justify-between lg:justify-start'>
+                    <button className='text-blue-600 hover:bg-blue-100 transition-all duration-[0.75s] rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8'><FaUserEdit /></button>
+                    <button className='text-red-600 hover:bg-red-100 transition-all duration-[0.75s] rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8'><MdDelete /></button>
+                  </div>
+                )}
+              </div>
             </div>
             <div className='p-4 w-full lg:w-3/6'>
               <h1 className='text-4xl text-zinc-300 font-semibold'>{Data.title}</h1>
