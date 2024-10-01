@@ -16,7 +16,7 @@ const AllBooks = () => {
     <div className='bg-zinc-900 h-auto px-12 py-8'>
       <h4 className='text-3xl text-yellow-100'>All Books</h4>
       {!Data && 
-        <div className='flex items-center justify-center my-8'>
+        <div className='w-full h-screen flex items-center justify-center'>
             <Loader/>{" "}
         </div>
       }

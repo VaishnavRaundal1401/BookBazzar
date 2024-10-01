@@ -22,6 +22,23 @@ const ViewBookDetails = () => {
     };
       fetch();
     }, []);
+
+    const headers = {
+      id: localStorage.getItem("id"),
+      authorization: `Bearer ${localStorage.getItem("token")}`,
+      bookid: id,
+    } 
+    //handle favourites
+    const handleFavourites = async() => {
+      const response = await axios.put("http://localhost:1000/api/v1/add-book-to-favourite", {}, {headers});
+      alert(response.data.message);
+    }
+
+    //handle cart
+    const handleCart = async() =>{
+      const response = await axios.put("http://localhost:1000/api/v1/add-to-cart", {}, {headers});
+      alert(response.data.message);
+    }
   return (
     <>
       {Data && (
@@ -31,8 +48,8 @@ const ViewBookDetails = () => {
                 <img src={Data.url} alt='/' className='h-[50vh] md:h-[60vh] lg:h-[70vh] rounded'/>
                 {isLoggedIn === true && role === "user" && (
                   <div className='flex flex-row lg:flex-col mt-4 lg:mt-0 items-center justify-between lg:justify-start'>
-                    <button className='text-red-600 hover:bg-red-100 transition-all duration-[0.75s] rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8'><FaHeart /></button>
-                    <button className='text-blue-600 hover:bg-blue-100 transition-all duration-[0.75s] rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8'><IoIosCart /></button>
+                    <button className='text-red-600 hover:bg-red-100 transition-all duration-[0.75s] rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8' onClick={handleFavourites}><FaHeart /></button>
+                    <button className='text-blue-600 hover:bg-blue-100 transition-all duration-[0.75s] rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8' onClick={handleCart}><IoIosCart /></button>
                   </div>
                 )}
                 {isLoggedIn === true && role === "admin" && (

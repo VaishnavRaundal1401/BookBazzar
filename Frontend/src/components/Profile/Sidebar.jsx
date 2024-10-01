@@ -12,7 +12,7 @@ const Sidebar = ({data}) => {
         <div className='w-full mt-4 h-[1px] bg-zinc-500 hidden lg:block'></div>
       </div>
       {/* Links */}
-        <div className='w-full flex-col items-center justify-center hidden lg:flex'>
+        <div className='w-full flex flex-col items-center justify-center lg:flex'>
           <Link to='/profile' className='text-zinc-100 font-semibold w-full py-2 text-center hover:bg-zinc-900 rounded transition-all duration-300'>
             Favourites
           </Link>
