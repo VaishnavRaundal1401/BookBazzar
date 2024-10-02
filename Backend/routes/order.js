@@ -15,7 +15,7 @@ router.post("/place-order", authToken, async (req, res) => {
             const orderDatafromDB = await newOrder.save();
             
             //saving order in user model
-            await User.findByIdAndUpdate(id, {$pull: {order: orderDatafromDB._id},});
+            await User.findByIdAndUpdate(id, {$push: {orders: orderDatafromDB._id},});
             //clearing cart
             await User.findByIdAndUpdate(id, {$pull: {cart:orderData._id},});
         }
@@ -30,7 +30,7 @@ router.get("/get-order-history", authToken, async (req, res) => {
     try {
         const {id} = req.headers;
         const userData = await User.findById(id).populate({
-            path: "order",
+            path: "orders",
             populate:{path:"book"},
         });
         
