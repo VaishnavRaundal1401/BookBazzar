@@ -44,11 +44,13 @@ router.get("/get-order-history", authToken, async (req, res) => {
 //get-all-orders --Admin
 router.get("/get-all-orders", authToken, async (req, res) => {
     try {
-        const userData = await User.findById(id).populate({
+        const userData = await Order.find()
+        .populate({
             path:"book",
         }).populate({
             path:"user",
-        }).sort({createdAt: -1});
+        })
+        .sort({createdAt: -1});
         return res.json({status: "Success", data: userData,});
     } catch (error) {
         return res.status(500).json({message:"An error occurred"});
@@ -56,10 +58,10 @@ router.get("/get-all-orders", authToken, async (req, res) => {
 });
 
 //update order --Admin
-router.get("/update-status/:id", authToken, async (req, res) => {
+router.put("/update-status/:id", authToken, async (req, res) => {
     try {
         const {id} = req.params; //order id
-        await Order.findByIdAndUpdate(id, {status: re.body.status});
+        await Order.findByIdAndUpdate(id, {status: req.body.status});
         return res.json({status: "Success", message:"Status Updated Successfully",});
     } catch (error) {
         return res.status(500).json({message:"An error occurred"});

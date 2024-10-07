@@ -16,6 +16,7 @@ import UserOrderHistory from './components/Profile/UserOrderHistory';
 import Settings from './components/Profile/Settings';
 import AllOrders from './pages/AllOrders';
 import AddBook from './pages/AddBook';
+import UpdateBook from './pages/UpdateBook';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -41,13 +42,14 @@ const App = () => {
           <Route path="/profile" element={<Profile/>}>
             {role === "user" ? <Route index element={<Favourites/>}/> : <Route index element={<AllOrders/>}/>}
             {role === "admin" &&
-              <Route path='/profile/add-book' element={<AddBook/>}/>
+                <Route path='/profile/add-book' element={<AddBook/>}/>
             }
             <Route path='/profile/orderHistory' element={<UserOrderHistory/>}/>
             <Route path='/profile/settings' element={<Settings/>}/>
           </Route>
           <Route path="/SignUp" element={<SignUp/>}/>
           <Route path="/LogIn" element={<LogIn/>}/>
+          <Route path="/updateBook/:id" element={<UpdateBook/>}/>
           <Route path="view-book-details/:id" element={<ViewBookDetails/>}/>
         </Routes>
         <Footer/>

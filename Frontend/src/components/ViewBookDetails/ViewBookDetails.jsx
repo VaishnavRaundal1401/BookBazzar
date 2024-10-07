@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import axios from 'axios';
 import Loader from '../Loader/Loader';
-import { useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { GrLanguage } from "react-icons/gr";
 import { FaHeart } from "react-icons/fa";
 import { IoIosCart } from "react-icons/io";
@@ -12,7 +12,8 @@ import { MdDelete } from "react-icons/md";
 const ViewBookDetails = () => {
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const role = useSelector((state) => state.auth.role);
-    
+    const navigate = useNavigate();
+
     const {id} = useParams();
     const [Data, setData] = useState();
     useEffect(() => {
@@ -39,6 +40,13 @@ const ViewBookDetails = () => {
       const response = await axios.put("http://localhost:1000/api/v1/add-to-cart", {}, {headers});
       alert(response.data.message);
     }
+
+    //delete the books (admin) 
+    const deleteBook = async() =>{
+      const response = await axios.delete("http://localhost:1000/api/v1/delete-book", {headers});
+      alert(response.data.message);
+      navigate("/all-books");
+    }
   return (
     <>
       {Data && (
@@ -54,8 +62,8 @@ const ViewBookDetails = () => {
                 )}
                 {isLoggedIn === true && role === "admin" && (
                   <div className='flex flex-row lg:flex-col mt-4 lg:mt-0 items-center justify-between lg:justify-start'>
-                    <button className='text-blue-600 hover:bg-blue-100 transition-all duration-[0.75s] rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8'><FaUserEdit /></button>
-                    <button className='text-red-600 hover:bg-red-100 transition-all duration-[0.75s] rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8'><MdDelete /></button>
+                    <Link to={`/updateBook/${id}`} className='text-blue-600 hover:bg-blue-100 transition-all duration-[0.75s] rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8'><FaUserEdit /></Link>
+                    <button className='text-red-600 hover:bg-red-100 transition-all duration-[0.75s] rounded lg:rounded-full text-3xl p-3 mt-8 md:mt-0 lg:mt-8' onClick={deleteBook}><MdDelete /></button>
                   </div>
                 )}
               </div>
