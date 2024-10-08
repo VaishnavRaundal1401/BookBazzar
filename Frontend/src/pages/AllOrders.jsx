@@ -5,6 +5,7 @@ import { FaUserLarge } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import { FaCheck } from "react-icons/fa";
 import { IoOpenOutline } from "react-icons/io5";
+import SeeUserData from './SeeUserData';
 
 const AllOrders = () => {
   const [AllOrders, setAllOrders] = useState();
@@ -22,7 +23,7 @@ const AllOrders = () => {
       setAllOrders(response.data.data);
     }
     fetch();
-  }, [AllOrders]);
+  }, []);
   
   const setOptionsButton = (i) =>{
     setOptions(i);
@@ -43,7 +44,7 @@ const AllOrders = () => {
   return (
     <>
       {!AllOrders && <div className='h-[100%] flex items-center justify-center'><Loader/></div> }
-      {AllOrders && AllOrders.length > 0 && 
+      {AllOrders && AllOrders.length > 0 &&( 
         <div className='h-[100%] p-0 md:p-4 text-zinc-100'>
           <h1 className='text-3xl md:text-5xl font-semibold text-zinc-500 md-8'>All Orders</h1>
           <div className='mt-4 bg-zinc-800 w-full rounded py-2 px-4 flex gap-2'>
@@ -84,12 +85,13 @@ const AllOrders = () => {
                 <h1 className='font-semibold'>
                   <button className='hover:scale-105 transition-all duration-300' onClick={()=>setOptionsButton(i)}>
                     {item.status === "Order Placed"? (
+                      <div className='text-cyan-500'>{item.status}</div>
+                    ): item.status === "Out for Delivery" ? (
+                      <div className='text-green-900'>{item.status}</div>
+                    ): item.status === "Delivered"?(
                       <div className='text-green-500'>{item.status}</div>
-                    ): item.status === "Cancelled" ? (
-                      <div className='text-red-500'>{item.status}</div>
                     ):(
-                      <div className='text-yellow-500'>{item.status}</div>
-                    )}
+                      <div className='text-red-500'>{item.status}</div>) }
                   </button>
                   <div className={`${Options === i ? "flex": "hidden"} flex mt-4`}>
                     <select name="status" id="" className='bg-gray-800' onChange={change} value={Values.status}>
@@ -126,7 +128,10 @@ const AllOrders = () => {
             </div>
           ))}
         </div>
-      }
+      )}
+      {userDivData && (
+        <SeeUserData userDivData={userDivData} userDiv={userDiv} setuserDiv={setuserDiv}/>
+      )}
     </>
   )
 }
