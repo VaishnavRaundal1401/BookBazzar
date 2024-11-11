@@ -1,7 +1,7 @@
 import React from 'react'
 import { RxCross1 } from "react-icons/rx";
 
-const SeeUserData = ({userDivData, userDiv, setuserDiv}) => {
+const SeeUserData = ({userDivData, userDiv, setUserDiv}) => {
   return (
     <>
       <div className={`${userDiv} top-0 left-0 h-screen w-full bg-zinc-800 opacity-80`}></div>
@@ -9,7 +9,7 @@ const SeeUserData = ({userDivData, userDiv, setuserDiv}) => {
         <div className='bg-zinc-900 text-zinc-500 rounded p-4 w-[80%] md:w-[50%] lg:w-[40%]'>
           <div className='flex items-center justify-between'>
             <h1 className='text-2xl font-semibold text-zinc-400'>User Information</h1>
-            <button onClick={() => setuserDiv("hidden")}>
+            <button onClick={() => setUserDiv("hidden")}>
               <RxCross1/>
             </button>
           </div>

@@ -46,7 +46,7 @@ const Navbar = () => {
       <nav className='z-50 relative flex bg-zinc-800 text-white px-8 py-4 items-center justify-between'>
         <Link to='/' className='flex items-center'>
           <p className='h-10 me-4 text-4xl'><FaBook /></p>
-          <h1 className='text-2xl font-semibold'>BookHeaven</h1>
+          <h1 className='text-2xl font-semibold'>BookBazzar</h1>
         </Link>
         <div className='nav-links-bookheaven block md:flex items-center gap-4'>
           <div className='hidden md:flex gap-4'>
